@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>需求撮合平台 MVP</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  
+
+  <main class="content">
+    <section id="home" class="view active">
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="搜需求 / 找线索" />
+        <button id="searchBtn" class="primary">搜索</button>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-channel="我想买">我想买</button>
+        <button class="tab" data-channel="我想找">我想找</button>
+      </div>
+      <div class="section-title">热门需求推荐</div>
+      <div id="homeList" class="card-list"></div>
+      <div class="board">
+        <div class="board-title">最新成交记录</div>
+        <div class="ticker" id="ticker">
+          <ul id="tickerList" class="ticker-list animate">
+            <li class="ticker-item">用户张三通过马大姐等6人连接价值¥12000的资源</li>
+            <li class="ticker-item">用户李四通过王老师等5人连接价值¥8000的资源</li>
+            <li class="ticker-item">用户王五通过陈总等4人连接价值¥5000的资源</li>
+            <li class="ticker-item">用户阿杰通过阿明等3人连接价值¥3000的资源</li>
+            <li class="ticker-item">用户小周通过小林等6人连接价值¥6000的资源</li>
+            <li class="ticker-item">用户张三通过马大姐等6人连接价值¥12000的资源</li>
+            <li class="ticker-item">用户李四通过王老师等5人连接价值¥8000的资源</li>
+            <li class="ticker-item">用户王五通过陈总等4人连接价值¥5000的资源</li>
+            <li class="ticker-item">用户阿杰通过阿明等3人连接价值¥3000的资源</li>
+            <li class="ticker-item">用户小周通过小林等6人连接价值¥6000的资源</li>
+          </ul>
+        </div>
+      </div>
+      <button class="fab" id="fabPublish">发布</button>
+    </section>
+
+    <section id="taskList" class="view">
+      <div class="filters">
+        <div class="list-title">我的引荐任务</div>
+        <select id="statusFilter">
+          <option value="全部">全部</option>
+          <option value="待处理">待处理</option>
+          <option value="处理中">处理中</option>
+          <option value="待验收">待验收</option>
+          <option value="已成交">已成交</option>
+          <option value="已拒绝">已拒绝</option>
+          <option value="已关闭">已关闭</option>
+        </select>
+        <select id="sortSelect">
+          <option value="时间">时间</option>
+          <option value="奖励">奖励</option>
+          <option value="难度">难度</option>
+        </select>
+      </div>
+      <div id="taskCards" class="card-list"></div>
+    </section>
+
+    <section id="taskDetail" class="view">
+      <div class="detail" id="detailWrap"></div>
+      <div class="chain" id="chainWrap"></div>
+      <div class="points-wrap">
+        <div class="block">
+          <div class="block-title">分润示意</div>
+          <ul class="plain"><li>解决者 70%</li><li>引荐链 30%（最多3节点：60%/25%/15%）</li><li>平台服务费 5%</li></ul>
+        </div>
+      </div>
+      <div class="detail-actions">
+        <button class="primary" id="btnApplySolve">我就是TA</button>
+        <button class="primary outline" id="btnApplyLead">我有线索</button>
+      </div>
+    </section>
+
+    <section id="publish" class="view">
+      <div class="form">
+        <label>标题<input id="pubTitle" type="text" placeholder="例如：求购 MacBook Pro M3 Max" /></label>
+        <label>详细描述<textarea id="pubDesc" placeholder="请描述需求、标准与期望"></textarea></label>
+        <label>类别<select id="pubCategory"><option>找人</option><option>找物</option><option>技能</option><option>跑腿</option><option>维修</option><option>购置</option></select></label>
+        <label>地点<input id="pubLocation" type="text" placeholder="📍 同城/线上/具体地点" /></label>
+        <label>价格与预算<input id="pubBudget" type="number" placeholder="期望支付价格/承接积分，如 5000" /></label>
+        <label>截止日期<input id="pubDeadline" type="date" /></label>
+        <div class="uploader">
+          <div class="uploader-title">附件上传</div>
+          <div class="uploader-box">+</div>
+        </div>
+        <div class="hint">发布需预存积分进行托管，平台审核后上架</div>
+        <div class="hint">根据类目与信用分设定积分下限，违规类目将拒绝上架</div>
+        <button class="primary" id="btnSubmitPublish">提交发布</button>
+      </div>
+    </section>
+
+    <section id="my" class="view">
+      <div class="profile">
+        <div class="avatar">Z</div>
+        <div>
+          <div class="nickname">用户昵称<span class="cert">认证</span></div>
+          <div class="level-line">圆头等级：LV4｜贡献值：1200</div>
+        </div>
+      </div>
+      <div class="stats-inline">积分 <span id="pointsTotal">8888</span>｜成功次数 <span id="successCount">12</span></div>
+      <div class="quick">
+        <button class="primary btn-slab" id="btnCheckin">签到领积分</button>
+        <button class="primary outline btn-slab" id="btnRecharge">积分充值</button>
+        <button class="primary outline btn-slab" id="btnVoucher">积分兑换</button>
+      </div>
+      <div class="quad">
+        <button class="quad-item" data-view="taskList"><span>我的</span><span>任务</span></button>
+        <button class="quad-item" data-view="publish"><span>我的</span><span>发布</span></button>
+        <button class="quad-item"><span>人脉</span><span>管理</span></button>
+        <button class="quad-item"><span>邀请</span><span>好友</span></button>
+      </div>
+      <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+        <button class="btn-rect">帮助和指南</button>
+        <button class="btn-rect">账户设置</button>
+      </div>
+    </section>
+
+    <section id="points" class="view">
+      <div class="points-wrap">
+        <div class="block">
+          <div class="block-title">资产</div>
+          <div class="asset"><span>余额</span><span id="assetBalance">8888</span></div>
+          <div class="asset"><span>本月获得</span><span id="assetMonth">1200</span></div>
+          <div class="asset"><span>待结算</span><span id="assetPending">300</span></div>
+        </div>
+        <div class="block">
+          <div class="block-title">获取</div>
+          <ul class="plain"><li>签到</li><li>完成任务</li><li>关键引荐</li><li>邀请入驻</li><li>完善资料</li></ul>
+        </div>
+        <div class="block">
+          <div class="block-title">消耗</div>
+          <ul class="plain"><li>发布托管</li><li>加急</li><li>置顶曝光</li><li>类目认证</li></ul>
+        </div>
+        <div class="block">
+          <div class="block-title">兑换券</div>
+          <ul class="plain"><li>曝光提升券</li><li>加急加速券</li></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottombar">
+    <button class="nav active" data-view="home">首页</button>
+    <button class="nav" data-view="taskList">任务</button>
+    <button class="nav" data-view="my">我的</button>
+  </footer>
+
+  <div id="modal" class="modal">
+    <div class="modal-inner">
+      <div class="modal-title" id="modalTitle">申请</div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions">
+        <button class="primary" id="modalSubmit">提交申请</button>
+        <button class="primary outline" id="modalClose">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
